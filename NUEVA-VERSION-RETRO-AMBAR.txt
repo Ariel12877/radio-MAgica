@@ -1,0 +1,13 @@
+RADIO ARGENTINA — VERSION PC RETRO AMBAR (v80)
+
+Cambios consolidados:
+- Display PC limpio con nombre de emisora dinámico, estado En Vivo y ecualizador de 24 barras ámbar.
+- Imagen base (1536 x 1024) sin franjas negras laterales (relleno suave de cielo nocturno), sin texto pintado en el pilar izquierdo, sin barra azul pintada en el volumen y sin barras blancas fijas en el botón Play/Pausa.
+- Control de volumen dinámico por CSS/JS (clic, arrastre, rueda del mouse y flechas) con esfera ámbar y persistencia en localStorage.
+- Efectos mágicos WebGL 100 % offline mediante vendor/three.min.js y pc-three.js (sin CDN ni type="module", compatible con doble clic file://) en 5 zonas: búho, estela, sombrero, varita y poción.
+- Botón Actualizar reubicado debajo de Instalar, integrado al lienzo principal.
+- Service Worker actualizado a caché radio-ar-v80.
+- La versión móvil (index.html) se conserva intacta.
+
+Uso:
+Extraer la carpeta y abrir pc.html (escritorio) o index.html (móvil).

@@ -1,0 +1,7 @@
+RADIO ARGENTINA - TEMA MAGICO VINTAGE
+
+Se incorporó magic-theme.css al index.html.
+La capa visual modifica la versión móvil (hasta 899 px) y deja la versión PC en su archivo separado.
+No se modificó app.js, stations.js, logos.js ni los IDs de controles; así se preservan funciones de reproducción, favoritos, ecualizador, volumen, balance, temporizador, búsqueda y filtros.
+
+La ambientación utiliza el wood-texture.jpg que ya estaba en el proyecto y efectos CSS de estrellas, brillos azul/cian y bordes dorados.

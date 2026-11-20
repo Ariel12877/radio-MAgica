@@ -1,0 +1,22 @@
+RADIO ARGENTINA - PAQUETE COMPLETO RECUPERADO
+
+Este ZIP contiene una copia completa del proyecto extraída del archivo de respaldo
+Radio-Argentina-Magica-Descarga.zip y mantiene sus archivos principales, recursos,
+logos, fuentes, subcarpeta radio-con-logos y archivos móviles.
+
+Se reemplazaron pc.html, pc.css y pc.js por las versiones PC preparadas para el
+rediseño mágico y se añadió radio-magica-pc.png.
+
+Se incluye backup-original-PC/ con las versiones originales de PC recuperadas
+antes de reemplazarlas, para permitir volver atrás.
+
+
+INSTALACIÓN / RECUPERACIÓN
+1. Extraer el ZIP entero a una carpeta.
+2. Mantener la estructura de carpetas intacta.
+3. Abrir index.html para la versión web/móvil y pc.html para la versión PC.
+4. No copiar archivos sueltos ni borrar las carpetas logos, fonts o radio-con-logos.
+
+IMPORTANTE: Los archivos PC se validaron por sintaxis, pero no se pudo realizar
+una prueba visual completa en un navegador real. Si el rediseño PC presenta
+problemas, restaurar los tres archivos de backup-original-PC.

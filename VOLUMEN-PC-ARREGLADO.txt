@@ -1,0 +1,9 @@
+ARREGLO DEL CONTROL DE VOLUMEN (PC)
+- La esfera dorada se desliza de izquierda (0%) a derecha (100%).
+- Clic o arrastre sobre la barra para cambiar volumen; arrastre de la esfera.
+- La rueda del mouse y teclas flecha también ajustan el volumen.
+- Se corrigieron las coordenadas del rail y del thumb para coincidir con el arte.
+- Se retocó la imagen base para eliminar la esfera fija que quedaba debajo.
+- El control de volumen móvil no se modificó.
+
+Para probarlo: abrir index.html y, en una ventana de escritorio, entrar a la versión PC.

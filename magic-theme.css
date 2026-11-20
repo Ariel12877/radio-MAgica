@@ -1,0 +1,209 @@
+/* RADIO ARGENTINA — MÁGICA VINTAGE THEME (mobile web app only) */
+:root {
+  --wood-dark: #180b05;
+  --wood-mid: #54260e;
+  --wood-light: #a75a22;
+  --spell-blue: #25c8ff;
+  --spell-gold: #e8bd62;
+}
+@media (max-width: 899px) {
+  html, body {
+    background-color: #020613 !important;
+    background-image:
+      radial-gradient(ellipse at 15% 20%, rgba(24,93,185,.24), transparent 42%),
+      radial-gradient(ellipse at 90% 65%, rgba(112,48,180,.19), transparent 42%),
+      radial-gradient(ellipse at 50% 100%, rgba(238,147,34,.11), transparent 55%),
+      linear-gradient(180deg, #020614 0%, #09132c 55%, #02040c 100%) !important;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    opacity: .5;
+    background-image:
+      radial-gradient(2px 2px at 12% 14%, #ffe9ad 50%, transparent 60%),
+      radial-gradient(1px 1px at 27% 39%, #b6e9ff 50%, transparent 60%),
+      radial-gradient(2px 2px at 71% 11%, #f5d88e 50%, transparent 60%),
+      radial-gradient(1px 1px at 88% 31%, #b6e9ff 50%, transparent 60%),
+      radial-gradient(2px 2px at 63% 74%, #ffe9ad 50%, transparent 60%),
+      radial-gradient(1px 1px at 8% 83%, #b6e9ff 50%, transparent 60%);
+    /* Capa compositada: solo opacity + transform */
+    transform: translateZ(0);
+    contain: strict;
+    will-change: transform, opacity;
+    animation: magicDrift 14s ease-in-out infinite alternate;
+  }
+  @keyframes magicDrift {
+    from { opacity: .28; transform: translate3d(0, 0, 0); }
+    to   { opacity: .65; transform: translate3d(0, -7px, 0); }
+  }
+  .app {
+    position: relative; z-index: 1;
+    background:
+      linear-gradient(180deg, rgba(8,3,1,.25), rgba(9,5,3,.55)),
+      url("wood-texture.jpg") center / 460px auto repeat,
+      linear-gradient(145deg, #7a3b17, #351809 58%, #170904) !important;
+    border: 3px solid #9b642b !important;
+    border-left: 5px solid #6e3a18 !important;
+    border-right: 5px solid #6e3a18 !important;
+    box-shadow: inset 0 0 0 2px #271105, inset 0 0 36px rgba(0,0,0,.7), 0 0 28px rgba(31,113,230,.22) !important;
+  }
+  .radio-header { background: linear-gradient(180deg, rgba(20,8,3,.65), transparent) !important; }
+  .brand-text { color: #ffedbd !important; text-shadow: 0 2px 3px #160800, 0 0 12px rgba(245,183,71,.3) !important; }
+  .brand-text::after { background: linear-gradient(90deg, transparent, #f5d27b, #ffe6a5, #f5d27b, transparent) !important; box-shadow: 0 0 12px rgba(255,193,77,.6) !important; }
+  .live-badge { color: #ffe6a6 !important; text-shadow: 0 0 8px rgba(245,185,66,.4); }
+  .install-chip { color: #ffedbd !important; background: linear-gradient(#56300e, #231004) !important; border-color: #c18a3a !important; box-shadow: 0 0 10px rgba(238,180,70,.24), inset 0 1px rgba(255,255,255,.18) !important; }
+  .dial-section { padding: 6px 10px 4px !important; }
+  .dial-frame {
+    border-radius: 16px !important; padding: 5px !important;
+    background: linear-gradient(145deg, #f0ce78, #9b6320 22%, #321707 42%, #c38b39 75%, #4a230a) !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,.7), inset 0 1px 2px rgba(255,245,194,.6), inset 0 -3px 4px #1a0802 !important;
+  }
+  .dial-glass { background: linear-gradient(180deg, #2b1306, #120801) !important; border: 1px solid #8d5a22; box-shadow: inset 0 0 14px rgba(0,0,0,.7) !important; }
+  .dial-tag { color: #f4d58a !important; text-shadow: 0 1px 2px #120600; }
+  .dial-scale::before { filter: sepia(.65) brightness(1.15); }
+  .dial-scale .tick { color: #ffe8b4 !important; text-shadow: 0 1px 3px #100500 !important; }
+  .needle { background: #38d8ff !important; box-shadow: 0 0 10px #20cfff !important; }
+  .now-playing-section { margin: 4px 10px 0; padding: 9px 12px 4px !important; border: 1px solid rgba(206,148,65,.65); border-radius: 14px; background: linear-gradient(180deg, rgba(9,8,12,.93), rgba(2,7,16,.95)) !important; box-shadow: inset 0 0 0 2px rgba(64,30,9,.7), 0 3px 12px rgba(0,0,0,.55) !important; }
+  .station-name { color: #fff0d1 !important; text-shadow: 0 1px 3px #000, 0 0 12px rgba(238,174,62,.18) !important; }
+  .station-freq { color: #26d8ff !important; text-shadow: 0 0 12px rgba(0,202,255,.7) !important; }
+  .visualizer .bar { background: linear-gradient(180deg, #8cf5ff, #28cfff 35%, #096dff) !important; filter: drop-shadow(0 0 5px rgba(26,202,255,.85)) !important; }
+  .controls-section { background: linear-gradient(180deg, rgba(39,17,5,.95), rgba(14,6,2,.96)) !important; border: 1px solid #bb8432 !important; border-radius: 20px !important; box-shadow: inset 0 0 0 2px #381906, inset 0 1px rgba(255,230,160,.22), 0 5px 14px rgba(0,0,0,.6) !important; }
+  .fav-btn .star-icon { color: #ffdb7b !important; filter: drop-shadow(0 0 4px rgba(248,189,66,.5)) !important; }
+  .fav-label, .eq-label { color: #ffedc0 !important; }
+  .prev-btn, .next-btn, .eq-btn { background: radial-gradient(circle at 35% 25%, #8a5623, #351605 70%) !important; border: 1px solid #c18a3c !important; box-shadow: inset 0 1px rgba(255,255,255,.25), 0 2px 5px #000 !important; color: #ffe6a9 !important; }
+  .play-btn { background: radial-gradient(circle at 35% 28%, #f0d080, #b37a2b 42%, #4b2409 80%) !important; border: 2px solid #e3bd66 !important; box-shadow: 0 0 0 3px #311505, 0 0 18px rgba(29,202,255,.5), inset 0 2px 4px rgba(255,255,255,.35) !important; }
+  .play-btn svg { color: #fff8df !important; filter: drop-shadow(0 1px 2px #3c1800); }
+  .status-bar { background: rgba(20,8,2,.6) !important; border-top: 1px solid rgba(205,145,55,.25); border-bottom: 1px solid rgba(205,145,55,.25); color: #f4d58a !important; }
+  .search-wrap { background: rgba(9,5,3,.84) !important; border: 1px solid #9c6b2b !important; box-shadow: inset 0 0 8px rgba(0,0,0,.5) !important; }
+  .station-search { color: #fff0d0 !important; }
+  .station-search::placeholder { color: #bda174 !important; }
+  .filter-btn { background: linear-gradient(#4b260c, #210e04) !important; color: #f5d58a !important; border-color: #9b6b2c !important; }
+  .filter-btn.active { background: linear-gradient(#b77a2b, #6a3b11) !important; color: #fff8e6 !important; box-shadow: 0 0 9px rgba(240,180,70,.3) !important; }
+  .station-list { background: rgba(7,4,3,.32) !important; }
+  .station-item { background: linear-gradient(120deg, rgba(60,27,8,.9), rgba(15,8,3,.92)) !important; border-color: rgba(190,130,48,.48) !important; box-shadow: inset 0 1px rgba(255,255,255,.06) !important; }
+  .station-item.active { background: linear-gradient(120deg, rgba(93,53,15,.94), rgba(29,14,4,.95)) !important; border-color: #e3b85d !important; box-shadow: 0 0 12px rgba(229,174,60,.22) !important; }
+  .bottom-nav { background: linear-gradient(180deg, rgba(32,14,4,.98), rgba(8,4,2,.99)) !important; border-top: 2px solid #a16d29 !important; box-shadow: 0 -5px 18px rgba(0,0,0,.65) !important; }
+  .nav-btn { color: #d6b47b !important; }
+  .nav-btn.active { color: #ffe5a0 !important; text-shadow: 0 0 9px rgba(245,190,75,.4); }
+  .eq-panel, .side-panel { background: linear-gradient(180deg, #2c1607, #100702) !important; border: 2px solid #bb8735 !important; box-shadow: 0 0 30px rgba(0,0,0,.75), 0 0 20px rgba(43,150,255,.2) !important; }
+  .eq-header, .side-header { color: #ffe7b2 !important; }
+  .eq-preset, .eq-reset, .side-body button { background: linear-gradient(#6b3b13, #291105) !important; border-color: #b9863a !important; color: #ffedc0 !important; }
+  .sheet { background: #1b0d04 !important; color: #fff0d1 !important; border-color: #bd8b43 !important; }
+}
+
+/* === RECONSTRUCCIÓN DEL DISEÑO: RADIO DE MADERA ARQUEADA ===
+/* Solo vista móvil. La versión PC (pc.html / pc.css / pc.js) queda intacta. */
+@media (max-width: 899px) {
+  html, body {
+    background-color: #030713 !important;
+    background-image:
+      radial-gradient(circle at 15% 12%, rgba(30,114,255,.24), transparent 27%),
+      radial-gradient(circle at 86% 18%, rgba(38,146,255,.22), transparent 30%),
+      radial-gradient(ellipse at 50% 90%, rgba(199,129,32,.16), transparent 45%),
+      linear-gradient(180deg, #020615 0%, #07152c 48%, #02040b 100%) !important;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .7;
+    background-image:
+      radial-gradient(2px 2px at 8% 9%, #ffe7a0 65%, transparent),
+      radial-gradient(1px 1px at 22% 23%, #a9dcff 65%, transparent),
+      radial-gradient(2px 2px at 77% 12%, #ffe7a0 65%, transparent),
+      radial-gradient(1px 1px at 91% 31%, #a9dcff 65%, transparent),
+      radial-gradient(2px 2px at 68% 64%, #ffe7a0 65%, transparent),
+      radial-gradient(1px 1px at 13% 77%, #a9dcff 65%, transparent),
+      radial-gradient(2px 2px at 43% 91%, #ffe7a0 65%, transparent);
+    transform: translateZ(0);
+    contain: strict;
+    will-change: transform, opacity;
+    animation: magicDrift 14s ease-in-out infinite alternate;
+  }
+  .app {
+    max-width: 480px !important;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(54,137,255,.14), transparent 38%),
+      linear-gradient(180deg, rgba(7,4,3,.08), rgba(4,3,8,.35)),
+      url("wood-texture.jpg") center / 520px auto repeat,
+      linear-gradient(145deg, #7a3c19, #351808 60%, #170904) !important;
+    border: 4px solid #8b5725 !important;
+    border-left: 5px solid #613412 !important; border-right: 5px solid #613412 !important;
+    box-shadow: inset 0 0 0 2px #210d03, inset 0 0 35px rgba(0,0,0,.72), 0 0 30px rgba(26,113,255,.25) !important;
+  }
+  .radio-header {
+    padding: 12px 12px 7px !important;
+    background: linear-gradient(180deg, rgba(17,6,1,.82), rgba(20,8,2,.28)) !important;
+  }
+  .brand-logo-wrap { display: none !important; }
+  .brand { flex: 1; justify-content: center; }
+  .brand-text {
+    font-family: Georgia, serif !important; font-size: clamp(1.15rem, 5.5vw, 1.7rem) !important;
+    font-weight: 900 !important; letter-spacing: .11em !important; text-transform: uppercase;
+    color: #ffedc4 !important; text-align: center;
+    text-shadow: 0 2px 2px #160700, 0 0 10px rgba(244,183,65,.45) !important;
+  }
+  .live-badge { font-size: .65rem !important; color: #ffe6aa !important; }
+  .install-chip { padding: 5px 8px !important; font-size: .65rem !important; }
+  .dial-section { padding: 5px 12px 6px !important; }
+  .dial-frame {
+    border-radius: 24px 24px 12px 12px !important; padding: 4px !important;
+    background: linear-gradient(145deg, #f0cf7a, #9a5c20 18%, #351705 42%, #c48b3b 72%, #4b2209) !important;
+    box-shadow: 0 8px 18px rgba(0,0,0,.65), inset 0 1px 2px rgba(255,248,204,.65), inset 0 -3px 4px #190700 !important;
+  }
+  .dial-glass {
+    border-radius: 18px 18px 9px 9px !important;
+    background: linear-gradient(180deg, #1a0b04, #080401) !important;
+    border: 1px solid #a36c2a !important; box-shadow: inset 0 0 12px #000 !important;
+  }
+  .dial-tag { color: #f5d78c !important; }
+  .dial-scale .tick { color: #ffedbd !important; text-shadow: 0 1px 3px #130600 !important; }
+  .needle { background: #32d7ff !important; box-shadow: 0 0 10px #1ecbff !important; }
+  .now-playing-section {
+    margin: 5px 10px 0 !important; padding: 8px 10px 5px !important;
+    border: 2px solid #b17a31 !important; border-radius: 17px !important;
+    background: linear-gradient(180deg, #030810, #070b14) !important;
+    box-shadow: inset 0 0 0 2px #311706, 0 3px 14px rgba(0,0,0,.55), 0 0 14px rgba(19,162,255,.15) !important;
+  }
+  .station-name { color: #fff0d2 !important; text-shadow: 0 1px 3px #000, 0 0 10px rgba(240,179,63,.2) !important; }
+  .station-freq { color: #23d8ff !important; text-shadow: 0 0 10px rgba(0,202,255,.65) !important; }
+  .visualizer .bar { background: linear-gradient(180deg, #91f5ff, #28cfff 35%, #0874ff) !important; filter: drop-shadow(0 0 5px rgba(26,202,255,.8)) !important; }
+  .controls-section {
+    margin: 5px 10px 5px !important; padding: 8px 8px !important; gap: 5px !important;
+    border-radius: 16px !important; border: 1px solid #a8732a !important;
+    background: linear-gradient(180deg, rgba(47,21,5,.97), rgba(14,5,1,.98)) !important;
+    box-shadow: inset 0 0 0 2px #351805, 0 4px 12px rgba(0,0,0,.65) !important;
+  }
+  .fav-btn, .eq-btn { width: 52px !important; padding: 5px 2px !important; background: linear-gradient(145deg, #6b3a12, #230e03) !important; border: 1px solid #bd873a !important; border-radius: 11px !important; }
+  .fav-btn .star-icon { color: #ffd97b !important; filter: drop-shadow(0 0 4px rgba(248,189,66,.45)) !important; }
+  .fav-label, .eq-label { color: #ffedc0 !important; font-size: .56rem !important; }
+  .transport { gap: 8px !important; }
+  .prev-btn, .next-btn { width: 42px !important; height: 42px !important; background: radial-gradient(circle at 35% 25%, #80501f, #270f03 75%) !important; border: 2px solid #c28a3b !important; color: #fff0d0 !important; }
+  .play-btn { width: 64px !important; height: 64px !important; background: radial-gradient(circle at 35% 28%, #f2d17f, #b37b2d 42%, #482108 80%) !important; border: 2px solid #e3bd66 !important; box-shadow: 0 0 0 3px #301505, 0 0 18px rgba(29,202,255,.52), inset 0 2px 4px rgba(255,255,255,.3) !important; }
+  .play-btn svg { color: #fff9e6 !important; }
+  .status-bar { color: #f5d58c !important; background: rgba(18,7,1,.65) !important; border-color: rgba(208,151,58,.35) !important; }
+  .search-wrap { background: rgba(8,4,2,.88) !important; border: 1px solid #96662a !important; box-shadow: inset 0 0 8px #000 !important; }
+  .station-search { color: #fff0d0 !important; }
+  .station-search::placeholder { color: #c1a37a !important; }
+  .filter-btn { background: linear-gradient(#49250b, #210d03) !important; color: #f4d58a !important; border-color: #98692c !important; }
+  .filter-btn.active { background: linear-gradient(#b77a2b, #693a11) !important; color: #fff8e6 !important; box-shadow: 0 0 9px rgba(240,180,70,.3) !important; }
+  .station-list { background: rgba(5,3,2,.24) !important; }
+  .station-item { background: linear-gradient(120deg, rgba(60,27,8,.92), rgba(15,8,3,.96)) !important; border-color: rgba(190,130,48,.5) !important; }
+  .station-item.active { background: linear-gradient(120deg, rgba(93,53,15,.94), rgba(29,14,4,.95)) !important; border-color: #e3b85d !important; box-shadow: 0 0 12px rgba(229,174,60,.2) !important; }
+  .bottom-nav { background: linear-gradient(180deg, #2c1507, #080401) !important; border-top: 2px solid #a16d29 !important; box-shadow: 0 -5px 18px rgba(0,0,0,.65) !important; }
+  .nav-btn { color: #d6b47b !important; }
+  .nav-btn.active { color: #ffe5a0 !important; text-shadow: 0 0 9px rgba(245,190,75,.35) !important; }
+  .eq-panel, .side-panel { background: linear-gradient(180deg, #2c1607, #100702) !important; border: 2px solid #bb8735 !important; box-shadow: 0 0 30px rgba(0,0,0,.75), 0 0 20px rgba(43,150,255,.18) !important; }
+  .eq-header, .side-header { color: #ffe7b2 !important; }
+  .eq-preset, .eq-reset, .side-body button { background: linear-gradient(#6b3b13, #291105) !important; border-color: #b9863a !important; color: #ffedc0 !important; }
+  .sheet { background: #1b0d04 !important; color: #fff0d1 !important; border-color: #bd8b43 !important; }
+}
+@media (max-width: 899px) {
+  html, body { background-image: url("magic-night.svg"), linear-gradient(180deg,#020614,#07152c,#02040c) !important; background-size: cover !important; background-position: center !important; background-attachment: fixed !important; }
+}
+
+/* Ahorro de batería / accesibilidad: sin estrellas en movimiento */
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none !important;
+    will-change: auto !important;
+    opacity: .45 !important;
+    transform: none !important;
+  }
+}
