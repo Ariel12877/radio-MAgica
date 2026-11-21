@@ -1,13 +1,23 @@
-RADIO ARGENTINA — VERSION PC RETRO AMBAR (v80)
+RADIO ARGENTINA — VERSION PC RETRO AMBAR
 
-Cambios consolidados:
-- Display PC limpio con nombre de emisora dinámico, estado En Vivo y ecualizador de 24 barras ámbar.
-- Imagen base (1536 x 1024) sin franjas negras laterales (relleno suave de cielo nocturno), sin texto pintado en el pilar izquierdo, sin barra azul pintada en el volumen y sin barras blancas fijas en el botón Play/Pausa.
-- Control de volumen dinámico por CSS/JS (clic, arrastre, rueda del mouse y flechas) con esfera ámbar y persistencia en localStorage.
-- Efectos mágicos WebGL 100 % offline mediante vendor/three.min.js y pc-three.js (sin CDN ni type="module", compatible con doble clic file://) en 5 zonas: búho, estela, sombrero, varita y poción.
-- Botón Actualizar reubicado debajo de Instalar, integrado al lienzo principal.
-- Service Worker actualizado a caché radio-ar-v80.
-- La versión móvil (index.html) se conserva intacta.
+Cambios de esta version:
+- Display PC limpio: sin logo/textos fijos de FM Azul.
+- Nombre de emisora dinamico y estado En Vivo.
+- Ecualizador de 24 barras animadas.
+- Tonos dorados/ambar, iluminacion retro tenue.
+- Volumen con perilla dorada y barra ambar, volumen inicial 92% si no habia valor guardado.
+- Libro del medio a la izquierda: ya no lleva la frase (se quitó de la imagen en la reparación V2).
+- Los controles PC se posicionan sobre la radio centrada.
+- La version movil se conserva.
 
-Uso:
-Extraer la carpeta y abrir pc.html (escritorio) o index.html (móvil).
+Extraer en carpeta nueva y abrir index.html.
+
+REPARACION PC + EFECTOS THREE.JS
+- Se mantiene el paquete completo original y los archivos móviles.
+- La imagen de PC conserva su proporción y se amplía suavemente (4,2%) centrada.
+- Se añadió pc-three.js: partículas y halos mágicos alrededor de zonas del búho,
+  sombrero, varita y elementos del escenario. La ilustración permanece intacta;
+  los efectos son ambientales y no simulan deformar el búho/sombrero.
+- El indicador de volumen PC es ahora un punto ámbar pequeño; el recorrido sigue
+  controlando el volumen real del reproductor.
+- Three.js se carga por CDN (requiere conexión para mostrar efectos).

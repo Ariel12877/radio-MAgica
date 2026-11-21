@@ -510,11 +510,7 @@ async function startOn(el, st, withEq) {
   }
   el.src = st.url;
   el.load();
-  const timeoutMs = withEq ? 4500 : 9000;
-  await Promise.race([
-    el.play(),
-    new Promise((_, reject) => setTimeout(() => reject(new Error("Stream timeout")), timeoutMs))
-  ]);
+  await el.play();
 }
 
 async function playStation(st) {

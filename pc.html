@@ -14,33 +14,16 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
-  <link rel="preload" href="radio-magica-pc.webp" as="image" type="image/webp" fetchpriority="high" />
+  <link rel="preload" href="radio-magica-pc-v2.png" as="image" type="image/png" />
   <link rel="preload" href="fonts/roboto-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="fonts/roboto-condensed-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
   <script>
     // Ventana angosta (celular): se usa la versión móvil, que es index.html
     (function () {
       var mq = window.matchMedia("(min-width: 900px)");
-      function go() { if (!mq.matches) location.replace("./index.html" + location.hash); }
+      function go() { if (!mq.matches) location.replace("./" + location.hash); }
       go();
       if (mq.addEventListener) mq.addEventListener("change", go);
-    })();
-  </script>
-  <script>
-    /* Escala temprana del escenario (antes del CSS/JS completo) → menos CLS y LCP más rápido */
-    (function () {
-      function fitEarly() {
-        var s = document.getElementById("stage");
-        if (!s) return;
-        var vw = window.innerWidth, vh = window.innerHeight;
-        var scale = Math.min(vw / 1536, vh / 1024);
-        var x = (vw - 1536 * scale) / 2, y = (vh - 1024 * scale) / 2;
-        s.style.transform = "translate(" + x + "px," + y + "px) scale(" + scale + ")";
-      }
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", fitEarly);
-      } else { fitEarly(); }
-      window.addEventListener("resize", fitEarly);
     })();
   </script>
   <title>Radio Argentina</title>
@@ -108,18 +91,18 @@
     <!-- ===== Anterior / Pausa / Siguiente ===== -->
     <button class="hit" id="btnPrev" type="button" style="left:369px;top:501px;width:123px;height:94px;--r:22px" data-i18n-title="prev" title="Anterior" aria-label="Anterior"></button>
     <button class="hit" id="btnPlay" type="button" style="left:502px;top:494px;width:125px;height:105px;--r:52px" title="Reproducir / pausar" aria-label="Reproducir / pausar">
-      <svg viewBox="0 0 114 116" aria-hidden="true">
+      <svg viewBox="502 494 125 105" aria-hidden="true">
         <defs>
           <linearGradient id="goldIco" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#fff8e3" />
-            <stop offset="1" stop-color="#f0c878" />
+            <stop offset="0" stop-color="#f9e6bd" />
+            <stop offset="1" stop-color="#e2b46c" />
           </linearGradient>
         </defs>
         <g class="ico-pause">
-          <rect x="40" y="36" width="11.5" height="44" rx="2.5" fill="url(#goldIco)" />
-          <rect x="62.5" y="36" width="11.5" height="44" rx="2.5" fill="url(#goldIco)" />
+          <rect x="544" y="523" width="13.4" height="46.6" rx="2" fill="url(#goldIco)" />
+          <rect x="568.4" y="523" width="13.6" height="46.6" rx="2" fill="url(#goldIco)" />
         </g>
-        <path class="ico-play" d="M45 36 L45 80 L80 58 Z" fill="url(#goldIco)" stroke="url(#goldIco)" stroke-width="5" stroke-linejoin="round" />
+        <path class="ico-play" d="M555 526 L555 567 L586 546.5 Z" fill="url(#goldIco)" stroke="url(#goldIco)" stroke-width="7" stroke-linejoin="round" />
       </svg>
     </button>
     <button class="hit" id="btnNext" type="button" style="left:639px;top:501px;width:125px;height:94px;--r:22px" data-i18n-title="next" title="Siguiente" aria-label="Siguiente"></button>
@@ -245,31 +228,13 @@
   </dialog>
 
   <audio id="player" preload="none"></audio>
-  <script src="stations.js?v=1" defer></script>
-  <script src="logos.js?v=1" defer></script>
-  <script src="pc.js?v=32" defer></script>
-  <script src="update.js?v=2" defer></script>
-  <!-- Three.js + efectos: carga diferida (no bloquea INP ni LCP) -->
-  <script>
-    (function () {
-      function loadMagic() {
-        if (window.__magicLoaded) return;
-        window.__magicLoaded = true;
-        var a = document.createElement("script");
-        a.src = "vendor/three.min.js";
-        a.onload = function () {
-          var b = document.createElement("script");
-          b.src = "pc-three.js?v=4";
-          document.body.appendChild(b);
-        };
-        document.body.appendChild(a);
-      }
-      if ("requestIdleCallback" in window) {
-        requestIdleCallback(loadMagic, { timeout: 2500 });
-      } else {
-        window.addEventListener("load", function () { setTimeout(loadMagic, 400); });
-      }
-    })();
-  </script>
+  <script src="stations.js?v=1"></script>
+  <script src="logos.js?v=1"></script>
+  <script src="pc.js?v=32"></script>
+  <script src="update.js?v=2"></script>
+  <!-- Three.js va dentro del proyecto (vendor/) y pc-three.js es un script común:
+       así los efectos funcionan abriendo el archivo con doble clic y sin Internet. -->
+  <script src="vendor/three.min.js?v=149"></script>
+  <script src="pc-three.js?v=2"></script>
 </body>
 </html>

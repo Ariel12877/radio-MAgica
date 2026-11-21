@@ -396,7 +396,7 @@ const STATIONS = [
     id: "delta",
     name: "Delta",
     freq: "FM 90.3",
-    url: "https://cdn.instream.audio:9069/stream"
+    url: "https://cdn.instream.audio/:9069/stream"
   },
   {
     id: "vorterix",

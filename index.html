@@ -27,20 +27,23 @@
     })();
   </script>
   <title>Radio Argentina</title>
-  <link rel="preload" href="logo.webp" as="image" type="image/webp" fetchpriority="high" />
-  <link rel="preload" href="fonts/open-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="fonts/exo-2-latin-700-italic.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="styles.css?v=29" />
+  <link rel="stylesheet" href="styles.css?v=28" />
   <link rel="stylesheet" href="magic-theme.css?v=2" />
 </head>
 <body>
   <div class="app" id="app">
+    <!-- Polvo de hadas / estrellas fugaces (lo dibuja magic-mobile.js) -->
+    <canvas id="magicDust" aria-hidden="true"></canvas>
 
     <!-- HEADER -->
     <header class="radio-header">
+      <!-- Cielo mágico: castillo y luna de fondo, y el búho que cruza de vez en cuando -->
+      <div class="magic-sky" aria-hidden="true">
+        <div class="magic-owl"><span class="magic-trail"></span><img src="magic-owl.webp" alt="" width="104" height="82" decoding="async" /></div>
+      </div>
       <div class="brand">
         <div class="brand-logo-wrap">
-          <img class="brand-logo" src="logo.webp" width="48" height="48" alt="Logo Ariel" decoding="async" fetchpriority="high" />
+          <img class="brand-logo" src="logo.webp" width="48" height="48" alt="Logo Ariel" decoding="async" />
         </div>
         <span class="brand-text">Radio Argentina</span>
       </div>
@@ -112,6 +115,7 @@
           <svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
         </button>
         <button class="ctrl-btn play-btn" id="btnPlay" title="Reproducir / pausar" aria-label="Reproducir">
+          <i class="magic-ring" aria-hidden="true"></i><i class="magic-ring r2" aria-hidden="true"></i>
           <svg class="ico-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.2v13.6a1 1 0 0 0 1.5.86l11-6.8a1 1 0 0 0 0-1.72l-11-6.8A1 1 0 0 0 8 5.2z"/></svg>
           <svg class="ico-pause" viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.5h3.6v15H7zM13.4 4.5H17v15h-3.4z"/></svg>
         </button>
@@ -251,10 +255,11 @@
   </div>
 
   <audio id="player" preload="none" crossorigin="anonymous"></audio>
-  <script src="stations.js?v=1" defer></script>
-  <script src="logos.js?v=1" defer></script>
-  <script src="app.js?v=29" defer></script>
-  <script src="update.js?v=1" defer></script>
+  <script src="stations.js?v=1"></script>
+  <script src="logos.js?v=1"></script>
+  <script src="app.js?v=28"></script>
+  <script src="update.js?v=1"></script>
+  <script src="magic-mobile.js?v=1"></script>
 
   <dialog class="sheet" id="shortcutDialog" aria-labelledby="shortcutTitle">
     <div class="sheet-head">

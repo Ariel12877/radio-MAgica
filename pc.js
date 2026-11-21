@@ -522,47 +522,16 @@ function setCurrent(st) {
   rememberStation();
 }
 
-let connectTimer = null;
-function clearConnectTimer() {
-  if (connectTimer) { clearTimeout(connectTimer); connectTimer = null; }
-}
-
 function play() {
   if (!currentStation) return;
   const token = ++playToken;
-  clearConnectTimer();
-  const url = currentStation.url;
-
-  // Aviso rápido si el navegador no soporta HLS (.m3u8) nativo (Chrome/Edge/Firefox en PC)
-  if (/\.m3u8(\?|$)/i.test(url) && !player.canPlayType("application/vnd.apple.mpegurl")) {
-    isPlaying = false;
-    setPlayIcon(false);
-    setStatus("nosignal");
-    toast("Stream HLS (.m3u8) no soportado en este navegador", 2600);
-    return;
-  }
-
   setStatus("connecting");
-  try { player.pause(); } catch (_) {}
-  player.src = url;
+  player.src = currentStation.url;
   player.load();
-
-  // Timeout rápido (9 s) para no quedar colgado en "Conectando…" si el servidor no responde
-  connectTimer = setTimeout(() => {
-    if (token !== playToken || isPlaying) return;
-    try { player.pause(); player.removeAttribute("src"); player.load(); } catch (_) {}
-    isPlaying = false;
-    setPlayIcon(false);
-    setStatus("nosignal");
-    updateDisplay();
-    stopMetaPoll();
-  }, 9000);
-
   const p = player.play();
   if (p && p.then) {
     p.then(() => {
       if (token !== playToken) return;
-      clearConnectTimer();
       isPlaying = true;
       setPlayIcon(true);
       setStatus("playing");
@@ -571,7 +540,6 @@ function play() {
       startMetaPoll();
     }).catch((err) => {
       if (token !== playToken) return;                 // se cambió de emisora mientras conectaba
-      clearConnectTimer();
       console.warn("Play error:", err);
       isPlaying = false;
       setPlayIcon(false);
@@ -584,7 +552,6 @@ function play() {
 
 function pause() {
   playToken++;
-  clearConnectTimer();
   player.pause();
   isPlaying = false;
   setPlayIcon(false);
@@ -627,7 +594,6 @@ function playSelected() {
 
 player.addEventListener("error", () => {
   if (!player.getAttribute("src")) return;
-  clearConnectTimer();
   isPlaying = false;
   setPlayIcon(false);
   setStatus("nosignal");
@@ -637,7 +603,6 @@ player.addEventListener("error", () => {
 player.addEventListener("waiting", () => { if (isPlaying) setStatus("buffering"); });
 player.addEventListener("playing", () => {
   if (!currentStation) return;
-  clearConnectTimer();
   isPlaying = true;
   setPlayIcon(true);
   setStatus("playing");
@@ -660,12 +625,17 @@ if ("mediaSession" in navigator) {
 /* ============================================================
    Volumen: perilla y slider
    ============================================================ */
-const VOL_X0 = 625, VOL_RANGE = 260;           // recorrido de la esfera: 565 (0%) → 895 (100%)
+// Recorrido del volumen, en coordenadas de la imagen (1536 × 1024).
+// La barra va de x=640 (0%) a x=872 (100%), dentro del panel "Volumen".
+// Tiene que coincidir con #vol .vslot en pc.css (left:18px dentro de #vol, que empieza en x=622).
+const VOL_X0 = 640, VOL_RANGE = 232;
+// Se escribe con "important" para que ninguna regla vieja del CSS pueda dejar la esfera clavada.
+function setImp(el, prop, val) { el.style.setProperty(prop, val, "important"); }
 function paintVolume() {
   const cx = VOL_X0 + volume * VOL_RANGE;                      // en coordenadas de la imagen
-  // Coordenadas relativas al slider: esfera dorada recorre el rail azul.
-  vThumb.style.left = (cx - 7 - volEl.offsetLeft) + "px";
-  vFill.style.width = Math.max(0, cx - VOL_X0) + "px";
+  const half = (vThumb.offsetWidth || 18) / 2;
+  setImp(vThumb, "left", (cx - half - volEl.offsetLeft) + "px");
+  setImp(vFill, "width", Math.max(0, cx - VOL_X0) + "px");
   const pct = Math.round(volume * 100);
   volEl.setAttribute("aria-valuenow", pct);
   knob.setAttribute("aria-valuenow", pct);

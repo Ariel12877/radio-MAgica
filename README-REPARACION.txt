@@ -1,15 +1,20 @@
-RADIO ARGENTINA — PAQUETE PC RETRO ÁMBAR (CONSOLIDADO v80)
+RADIO ARGENTINA — PAQUETE PC RETRO ÁMBAR REPARADO
 
-Esta carpeta incluye el proyecto completo (escritorio + móvil) listo para usar sin conexión.
+Esta carpeta incluye el proyecto original completo y la reparación para PC.
 
-CAMBIOS APLICADOS
-* Imagen de PC (radio-magica-pc.png): relleno lateral de cielo nocturno sin barras negras, limpieza de texto en pilar izquierdo, limpieza de barra azul de volumen, suavizado de borde dorado y eliminación limpia de las barras de pausa pintadas en el botón central.
-* Botón Play/Pausa: íconos SVG dinámicos alineados y conmutando entre ambos estados.
-* Control de volumen: barra y esfera ámbar dinámicas sin reglas CSS bloqueantes; sincronizado con audio real y localStorage.
-* Efectos mágicos WebGL 100 % offline: vendor/three.min.js + pc-three.js (scripts clásicos sin CDN, funcionan con doble clic vía file://) en búho, estela, sombrero, varita y poción.
-* Botón Actualizar integrado arriba a la derecha, debajo de Instalar.
-* Caché del Service Worker actualizada a radio-ar-v80.
+CAMBIOS
+* Imagen de PC ampliada proporcionalmente 4,2%, centrada, sin distorsión.
+* Efectos mágicos ambientales Three.js: partículas, halos y pulsos de luz.
+  Se distribuyen alrededor del búho, sombrero, varita y otras zonas ilustradas.
+  Los elementos de la ilustración son parte de la imagen fija y no se mueven como
+  modelos 3D independientes.
+* Indicador de volumen convertido en un pequeño punto ámbar brillante.
+* Móvil: archivos originales conservados sin cambios.
+
 
 USO
 1. Extraer todo el ZIP a una carpeta.
-2. Abrir pc.html con doble clic para escritorio o index.html para móvil.
+2. Abrir index.html para móvil o pc.html para escritorio.
+3. Con conexión a Internet, pc-three.js carga Three.js desde CDN.
+   Si no hay conexión, el reproductor continúa; se omiten los efectos 3D.
+

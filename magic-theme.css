@@ -25,16 +25,9 @@
       radial-gradient(1px 1px at 88% 31%, #b6e9ff 50%, transparent 60%),
       radial-gradient(2px 2px at 63% 74%, #ffe9ad 50%, transparent 60%),
       radial-gradient(1px 1px at 8% 83%, #b6e9ff 50%, transparent 60%);
-    /* Capa compositada: solo opacity + transform */
-    transform: translateZ(0);
-    contain: strict;
-    will-change: transform, opacity;
-    animation: magicDrift 14s ease-in-out infinite alternate;
+    animation: magicDrift 12s ease-in-out infinite alternate;
   }
-  @keyframes magicDrift {
-    from { opacity: .28; transform: translate3d(0, 0, 0); }
-    to   { opacity: .65; transform: translate3d(0, -7px, 0); }
-  }
+  @keyframes magicDrift { from { opacity: .28; transform: translateY(0); } to { opacity: .65; transform: translateY(-7px); } }
   .app {
     position: relative; z-index: 1;
     background:
@@ -111,10 +104,7 @@
       radial-gradient(2px 2px at 68% 64%, #ffe7a0 65%, transparent),
       radial-gradient(1px 1px at 13% 77%, #a9dcff 65%, transparent),
       radial-gradient(2px 2px at 43% 91%, #ffe7a0 65%, transparent);
-    transform: translateZ(0);
-    contain: strict;
-    will-change: transform, opacity;
-    animation: magicDrift 14s ease-in-out infinite alternate;
+    animation: magicDrift 10s ease-in-out infinite alternate;
   }
   .app {
     max-width: 480px !important;
@@ -198,12 +188,113 @@
   html, body { background-image: url("magic-night.svg"), linear-gradient(180deg,#020614,#07152c,#02040c) !important; background-size: cover !important; background-position: center !important; background-attachment: fixed !important; }
 }
 
-/* Ahorro de batería / accesibilidad: sin estrellas en movimiento */
-@media (prefers-reduced-motion: reduce) {
-  body::before {
-    animation: none !important;
-    will-change: auto !important;
-    opacity: .45 !important;
-    transform: none !important;
+/* =====================================================================
+   MÓVIL MÁGICO · versión 2
+   Encabezado convertido en una "ventana" al cielo nocturno: castillo y luna
+   (recortados de la ilustración de la versión PC), el búho con el sobre que cruza
+   de vez en cuando, estrellas que titilan, polvo de hadas y ondas de luz en el play.
+   Solo vista móvil. Va al final a propósito: manda sobre los bloques anteriores.
+   ===================================================================== */
+@media (max-width: 899px) {
+  /* --- Ventana del cielo (encabezado) --- */
+  .radio-header {
+    position: relative;
+    margin: 8px 10px 0 !important;
+    padding: 12px 12px 10px !important;
+    min-height: 126px;
+    border: 2px solid #c48b3b;
+    border-radius: 22px !important;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 18% 0%, rgba(54,120,230,.40), transparent 62%),
+      linear-gradient(180deg, #06163a 0%, #08205a 52%, #0a1534 100%) !important;
+    box-shadow: 0 0 0 2px #2a1206, 0 6px 16px rgba(0,0,0,.65), inset 0 0 26px rgba(0,0,0,.6) !important;
+    grid-template-columns: auto auto 1fr !important;
+    grid-template-rows: 1fr auto !important;
+    grid-template-areas: "brand brand brand" "live install ." !important;
+    align-items: end !important;
   }
+  .radio-header::after { display: none !important; }
+  .radio-header > *:not(.magic-sky) { position: relative; z-index: 2; }
+  .brand { justify-content: flex-start !important; align-self: start; }
+  .brand-text {
+    font-size: clamp(1.05rem, 5.2vw, 1.5rem) !important; letter-spacing: .09em !important; text-align: left !important;
+    text-shadow: 0 2px 3px #000, 0 0 14px rgba(255,200,90,.55), 0 0 4px rgba(0,0,0,.9) !important;
+  }
+  .live-badge { justify-self: start !important; font-size: .68rem !important; text-shadow: 0 1px 3px #000; }
+  .install-chip { justify-self: start !important; margin-left: 8px !important; }
+
+  .magic-sky {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+    background:
+      url("magic-castle.webp") right -4px bottom -2px / auto 148% no-repeat;
+  }
+  /* estrellas que titilan */
+  .magic-sky::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1.6px 1.6px at 9% 16%, #fff7d0 60%, transparent),
+      radial-gradient(1.2px 1.2px at 24% 38%, #bfe8ff 60%, transparent),
+      radial-gradient(1.6px 1.6px at 41% 14%, #ffe9a8 60%, transparent),
+      radial-gradient(1.2px 1.2px at 55% 30%, #bfe8ff 60%, transparent),
+      radial-gradient(1.4px 1.4px at 33% 62%, #fff7d0 60%, transparent),
+      radial-gradient(1.2px 1.2px at 6% 70%, #bfe8ff 60%, transparent),
+      radial-gradient(1.4px 1.4px at 62% 8%, #fff7d0 60%, transparent);
+    animation: magicTwinkle 4.2s ease-in-out infinite alternate;
+  }
+  @keyframes magicTwinkle { from { opacity: .35; } to { opacity: 1; } }
+
+  /* --- Búho con el sobre: cruza el cielo cada ~20 s, con estela dorada --- */
+  .magic-owl {
+    position: absolute; left: 0; top: 18px; width: 104px; opacity: 0;
+    animation: magicOwlFly 20s linear infinite; animation-delay: 1.2s; will-change: transform, opacity;
+  }
+  .magic-owl img { display: block; width: 104px; height: auto; filter: drop-shadow(0 3px 5px rgba(0,0,0,.55)); animation: magicOwlBob 1.6s ease-in-out infinite alternate; }
+  .magic-trail {
+    position: absolute; right: 84px; top: 30px; width: 120px; height: 34px; pointer-events: none;
+    background:
+      radial-gradient(ellipse 100% 50% at 100% 50%, rgba(255,230,150,.85) 0%, rgba(255,190,70,.32) 30%, transparent 100%),
+      radial-gradient(2px 2px at 14% 40%, #fff2b8 60%, transparent), radial-gradient(1.6px 1.6px at 30% 62%, #ffd98a 60%, transparent),
+      radial-gradient(2px 2px at 48% 34%, #fff2b8 60%, transparent), radial-gradient(1.6px 1.6px at 66% 58%, #ffd98a 60%, transparent),
+      radial-gradient(1.6px 1.6px at 82% 42%, #fff2b8 60%, transparent);
+    filter: blur(.3px);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 28%, #000 62%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 28%, #000 62%, transparent);
+  }
+  @keyframes magicOwlFly {
+    0%   { transform: translate(-150px, 18px) rotate(-6deg); opacity: 0; }
+    4%   { opacity: 1; }
+    30%  { transform: translate(120px, -2px) rotate(-3deg); opacity: 1; }
+    50%  { transform: translate(300px, 22px) rotate(-5deg); opacity: 1; }
+    58%  { transform: translate(470px, 6px) rotate(-6deg); opacity: 0; }
+    100% { transform: translate(470px, 6px) rotate(-6deg); opacity: 0; }
+  }
+  @keyframes magicOwlBob { from { transform: translateY(-3px); } to { transform: translateY(3px); } }
+
+  /* --- Polvo de hadas (canvas) --- */
+  #magicDust { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+
+  /* --- Botón de reproducir: ondas de luz azul cuando suena --- */
+  .play-btn { position: relative; }
+  .magic-ring {
+    position: absolute; inset: -2px; border-radius: 50%; pointer-events: none; opacity: 0;
+    border: 2px solid rgba(60,210,255,.7);
+  }
+  .play-btn.playing .magic-ring { animation: magicRing 2.8s ease-out infinite; }
+  .play-btn.playing .magic-ring.r2 { animation-delay: 1.4s; }
+  @keyframes magicRing { 0% { transform: scale(1); opacity: .75; } 100% { transform: scale(1.9); opacity: 0; } }
+
+  /* --- Emisora que está sonando: brilla como una vela --- */
+  .station-item.is-playing { animation: magicItemGlow 3.2s ease-in-out infinite; }
+  @keyframes magicItemGlow {
+    0%, 100% { filter: drop-shadow(0 0 0 rgba(240,190,80,0)); }
+    50%      { filter: drop-shadow(0 0 8px rgba(240,190,80,.6)); }
+  }
+}
+
+/* Quien prefiere menos movimiento: el búho queda quieto sobre el castillo y no hay ondas ni destellos */
+@media (max-width: 899px) and (prefers-reduced-motion: reduce) {
+  .magic-sky::before, .magic-owl, .magic-owl img, .play-btn.playing .magic-ring, .station-item.is-playing { animation: none !important; }
+  .magic-owl { left: auto; right: 118px; top: 34px; opacity: .95; transform: rotate(-6deg); }
+  .magic-trail { display: none; }
 }

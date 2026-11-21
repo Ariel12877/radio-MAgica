@@ -1,0 +1,51 @@
+REPARACION V2 - Radio Argentina (version PC)
+
+QUE SE ARREGLO
+1) Volumen que no se movia
+   - pc.css tenia reglas viejas con !important que clavaban la esfera (left) y el relleno (width).
+     Se quitaron.
+   - Habia un comentario sin cerrar al final de pc.css que anulaba las reglas de la reparacion
+     anterior. Se cerro y se reemplazo por un bloque limpio al final del archivo.
+   - La barra azul estaba pintada dentro de la imagen. Se borro: ahora la dibuja el CSS
+     (carril oscuro + relleno ambar + punto ambar).
+   - pc.js: paintVolume() escribe left/width con "important". El recorrido es x=640 a x=872
+     (VOL_X0 y VOL_RANGE) y tiene que coincidir con #vol .vslot en pc.css.
+2) Pantalla estrecha
+   - El arte es un cuadrado de 1024 px dentro de un marco de 1536 px: quedaban franjas negras.
+     Radio-magica-pc-v2.png rellena los costados con una continuacion suave del cielo y se
+     funde con pc-backdrop.jpg (fondo borroso de la pagina).
+   - La radio en si mantiene el mismo ancho. Para una radio mas ancha haria falta una
+     ilustracion nueva.
+3) Frase "Profesorado de Informatica"
+   - Estaba pintada en la imagen (no en el codigo). Se reconstruyo esa zona.
+4) Animaciones (Three.js)
+   - El navegador bloqueaba pc-three.js al abrir el archivo con doble clic (era un modulo),
+     y Three.js se bajaba de internet. Ahora pc-three.js es un script comun y Three.js r149
+     (MIT) esta en vendor/three.min.js. Funciona sin conexion.
+   - Las posiciones estaban invertidas en vertical: ahora el origen es arriba a la izquierda.
+   - Efectos: particulas doradas, halos que respiran y pulsos de luz sobre el buho, la estela,
+     el sombrero, la varita y la pocion. La ilustracion de fondo sigue siendo una imagen fija.
+5) Boton play/pausa
+   - Las barras de pausa venian pintadas en la imagen y el icono del SVG se superponia.
+     Se borraron de la imagen y el icono se centro en el disco.
+
+ARCHIVOS NUEVOS: radio-magica-pc-v2.png, pc-backdrop.jpg, vendor/three.min.js, vendor/three-LICENSE.txt
+IMAGEN ORIGINAL: backup-original-PC/radio-magica-pc-original.png
+CACHE: sw.js subio a radio-ar-v80. Si en el navegador ves la version vieja, recarga con Ctrl+F5.
+
+----------------------------------------------------------------------
+VERSION MOVIL MAGICA (index.html)
+- El encabezado ahora es una "ventana" al cielo nocturno con marco dorado. El castillo y la luna
+  salen de la ilustracion de la version PC (magic-castle.webp; se quito el boton "Instalar" que
+  venia pintado en el arte y el arco de madera de la radio).
+- El buho blanco con el sobre tambien sale de la ilustracion PC (magic-owl.webp, recortado con
+  fondo transparente). Cruza el cielo cada ~20 s con una estela dorada (CSS, magic-theme.css).
+- magic-mobile.js (nuevo): polvo de hadas, destellos que caen del buho y una estrella fugaz.
+  Es solo decoracion, no toca app.js. Pausa cuando la pestana esta oculta.
+- Ondas de luz azul alrededor del boton play mientras suena la radio, y brillo suave en la emisora activa.
+- Quien tiene activado "reducir movimiento" ve el buho quieto y sin efectos.
+- La lista de emisoras queda ~60 px mas corta porque el encabezado es mas alto.
+- Archivos nuevos: magic-castle.webp, magic-owl.webp, magic-mobile.js. Cambiados: index.html,
+  magic-theme.css (bloque nuevo al final), sw.js (radio-ar-v81).
+- Los logos de emisoras (radio_logos/local/*.jpg) no estan en la carpeta: la app muestra las iniciales.
+  Eso ya pasaba antes de estos cambios.
