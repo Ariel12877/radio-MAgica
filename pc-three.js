@@ -228,14 +228,14 @@
       for (i = 0; i < pulses.length; i++) {
         var q = pulses[i], u = ((t + q.offset) % q.period) / q.period;
         q.mesh.scale.setScalar(0.35 + 0.95 * u);
-        q.mesh.material.opacity = 0.32 * Math.pow(1 - u, 1.6) * Math.min(1, u * 8);
+        q.mesh.material.opacity = 0.42 * Math.pow(1 - u, 1.5) * Math.min(1, u * 10);
       }
 
       if (t > nextShield) {
         spawnShield(t);
         if (Math.random() < 0.55) spawnShield(t);
         if (Math.random() < 0.25) spawnShield(t);
-        nextShield = t + 1.6 + Math.random() * 2.8;
+        nextShield = t + 1.1 + Math.random() * 2.0;
       }
       for (i = shields.length - 1; i >= 0; i--) {
         var sh = shields[i];

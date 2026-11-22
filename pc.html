@@ -25,7 +25,7 @@
     })();
   </script>
   <title>Radio Argentina</title>
-  <link rel="stylesheet" href="pc.css?v=51" />
+  <link rel="stylesheet" href="pc.css?v=52" />
 </head>
 <body>
   <div class="backdrop" aria-hidden="true"></div>
@@ -46,6 +46,19 @@
   <main class="stage" id="stage">
     <h1 class="sr-only">Radio Argentina</h1>
     <canvas id="magicFx" aria-hidden="true"></canvas>
+
+    <!-- Decoración: escudos y luces (no interactivo, no toca controles) -->
+    <div class="fx-shields" aria-hidden="true">
+      <span class="fx-shield s1"></span>
+      <span class="fx-shield s2"></span>
+      <span class="fx-shield s3"></span>
+      <span class="fx-shield s4"></span>
+      <span class="fx-shield s5"></span>
+      <span class="fx-shield s6"></span>
+    </div>
+    <div class="fx-wand-glow" aria-hidden="true"></div>
+    <div class="fx-hat-glow" aria-hidden="true"></div>
+
 
     <!-- ===== Dial: la aguja se mueve según la frecuencia ===== -->
     <i class="dial-backlight" aria-hidden="true"></i>
@@ -241,7 +254,7 @@
   <!-- Three.js va dentro del proyecto (vendor/) y pc-three.js es un script común:
        así los efectos funcionan abriendo el archivo con doble clic y sin Internet. -->
   <script src="vendor/three.min.js?v=149"></script>
-  <script src="pc-three.js?v=5"></script>
+  <script src="pc-three.js?v=6"></script>
 
   <script>
   /* Búho pardo con carta: derecha → izquierda (no toca la radio) */
