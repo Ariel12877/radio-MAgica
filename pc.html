@@ -25,10 +25,18 @@
     })();
   </script>
   <title>Radio Argentina</title>
-  <link rel="stylesheet" href="pc.css?v=50" />
+  <link rel="stylesheet" href="pc.css?v=51" />
 </head>
 <body>
   <div class="backdrop" aria-hidden="true"></div>
+
+  <!-- Búho pardo volador con carta (solo decoración) -->
+  <div id="flyingOwl" class="flying-owl" aria-hidden="true">
+    <div class="owl-body">
+      <img src="magic-owl.webp" alt="" class="owl-img" width="108" height="85" />
+      <div class="owl-letter">✉</div>
+    </div>
+  </div>
 
   <!--
     Escenario de 1536 × 1024, igual que la imagen de referencia.
@@ -233,6 +241,28 @@
   <!-- Three.js va dentro del proyecto (vendor/) y pc-three.js es un script común:
        así los efectos funcionan abriendo el archivo con doble clic y sin Internet. -->
   <script src="vendor/three.min.js?v=149"></script>
-  <script src="pc-three.js?v=2"></script>
+  <script src="pc-three.js?v=5"></script>
+
+  <script>
+  /* Búho pardo con carta: derecha → izquierda (no toca la radio) */
+  (function () {
+    var el = document.getElementById("flyingOwl");
+    if (!el || (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) return;
+    var busy = false;
+    function fly() {
+      if (busy || document.hidden) return;
+      busy = true;
+      el.classList.remove("is-flying");
+      void el.offsetWidth;
+      el.classList.add("is-flying");
+      setTimeout(function () { el.classList.remove("is-flying"); busy = false; }, 16500);
+    }
+    setTimeout(fly, 3500);
+    setInterval(function () { if (!busy) fly(); }, 14000 + Math.random() * 8000);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { el.classList.remove("is-flying"); busy = false; }
+    });
+  })();
+  </script>
 </body>
 </html>
