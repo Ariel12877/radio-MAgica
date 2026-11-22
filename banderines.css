@@ -1,0 +1,54 @@
+/* ==========================================================
+   Banderines de las cuatro casas (solo decoración, versión PC)
+   Van sobre la mesa de madera, a cada lado de la radio.
+   Viven dentro de .backdrop, así que quedan DETRÁS del escenario:
+   no tapan ni tocan ningún control.
+   ========================================================== */
+.banderines {
+  /* Ancho de cada banderín: usa el margen de madera que queda a cada lado
+     (el escenario mide 150vh de ancho cuando la ventana es más ancha que alta). */
+  --bw: clamp(30px, calc((100vw - 150vh) / 3.6), 9vh);
+  position: absolute;
+  top: 16vh;
+  display: grid;
+  grid-template-columns: repeat(2, var(--bw));
+  gap: 2.4vh calc(var(--bw) * 0.14);
+  pointer-events: none;
+}
+/* En pantallas anchas se arriman a la radio; en las angostas quedan pegados al borde.
+   (75vh = mitad del ancho del escenario; 2.14 × --bw = ancho de un grupo de dos banderines) */
+.banderines-izq { left:  max(calc(var(--bw) * 0.18), calc(50% - 75vh - var(--bw) * 2.44)); }
+.banderines-der { right: max(calc(var(--bw) * 0.18), calc(50% - 75vh - var(--bw) * 2.44)); }
+
+.bd {
+  position: relative;
+  display: block;
+  width: var(--bw);
+  aspect-ratio: 205 / 472;
+  background: center top / 100% 100% no-repeat;
+  filter: drop-shadow(2px 5px 4px rgba(0, 0, 0, 0.55));
+  transform-origin: 50% 0;
+  animation: bdSway 6s ease-in-out infinite;
+}
+/* Varita de latón de la que cuelga cada banderín */
+.bd::before {
+  content: "";
+  position: absolute;
+  left: -7%; right: -7%; top: -3px;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #f2d98a, #b8902f 55%, #6b4c14);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+}
+.bd-g { background-image: url("banderin-gryffindor.webp"); }
+.bd-r { background-image: url("banderin-ravenclaw.webp");  animation-duration: 7s;   animation-delay: -1.5s; }
+.bd-s { background-image: url("banderin-slytherin.webp");  animation-duration: 6.5s; animation-delay: -3s; }
+.bd-h { background-image: url("banderin-hufflepuff.webp"); animation-duration: 7.5s; animation-delay: -4.5s; }
+
+@keyframes bdSway {
+  0%, 100% { transform: rotate(-1.4deg); }
+  50%      { transform: rotate(1.4deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bd { animation: none; }
+}
