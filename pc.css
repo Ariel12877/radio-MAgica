@@ -162,7 +162,7 @@ button { cursor: pointer; border: 0; background: none; -webkit-user-select: none
   width: 1536px; height: 1024px;
   transform-origin: 0 0;
   background: url("pc-skin.webp") 0 0 / 1536px 1024px no-repeat;
-  visibility: hidden;
+  visibility: visible;
   -webkit-user-select: none; user-select: none;
   z-index: 1;
   filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.55)) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
@@ -1274,7 +1274,27 @@ button { cursor: pointer; border: 0; background: none; -webkit-user-select: none
    ===================================================================== */
 
 /* Fondo de la página: continuación suave del cielo nocturno, sin franjas negras */
-.backdrop { background: #070a14 url("pc-backdrop.jpg") center / cover no-repeat !important; }
+.backdrop {
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 48%, transparent 35%, rgba(10, 5, 2, 0.55) 100%),
+    radial-gradient(ellipse 55% 18% at 50% 78%, rgba(0, 0, 0, 0.65) 0%, transparent 70%),
+    radial-gradient(ellipse 80% 40% at 50% 18%, rgba(255, 190, 100, 0.10) 0%, transparent 65%),
+    repeating-linear-gradient(
+      92deg,
+      rgba(0, 0, 0, 0.06) 0px,
+      rgba(0, 0, 0, 0.06) 1px,
+      transparent 1px,
+      transparent 14px,
+      rgba(255, 220, 160, 0.03) 14px,
+      rgba(255, 220, 160, 0.03) 15px,
+      transparent 15px,
+      transparent 28px
+    ),
+    url("wood-texture.jpg") center center / 420px 420px repeat,
+    linear-gradient(180deg, #1e120a 0%, #3a2618 28%, #4e3422 52%, #3a2618 78%, #1a0e08 100%) !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
 
 /* Escenario: imagen ensanchada con bordes que se funden con el fondo */
 .stage {
@@ -1322,3 +1342,20 @@ button { cursor: pointer; border: 0; background: none; -webkit-user-select: none
 /* Botón play/pausa: el ícono lo dibuja el SVG (las barras de pausa ya no vienen pintadas en la imagen).
    Se baja unos píxeles para quedar en el centro del disco azul. */
 #btnPlay svg { transform: translateY(8px); }
+
+
+/* ===== Seguridad final: radio nítida, sin foto borrosa, controles activos ===== */
+.backdrop {
+  /* ya definido arriba sin pc-backdrop.jpg */
+}
+.stage {
+  visibility: visible !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+.stage button,
+.stage .vol,
+.stage .list,
+.stage .lcd {
+  pointer-events: auto !important;
+}
