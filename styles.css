@@ -3,14 +3,7 @@
    Colores, tipografía, dial dorado, tags de estaciones, glow
    ========================================================== */
 
-/* Tipografías locales (sin Google Fonts: carga más rápida en móvil y offline) */
-@font-face { font-family: "RA Exo"; font-style: italic; font-weight: 700; font-display: swap; src: url("fonts/exo-2-latin-700-italic.woff2") format("woff2"); }
-@font-face { font-family: "RA Exo"; font-style: italic; font-weight: 800; font-display: swap; src: url("fonts/exo-2-latin-800-italic.woff2") format("woff2"); }
-@font-face { font-family: "RA Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/open-sans-latin-400-normal.woff2") format("woff2"); }
-@font-face { font-family: "RA Sans"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/open-sans-latin-600-normal.woff2") format("woff2"); }
-@font-face { font-family: "RA Sans"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/open-sans-latin-700-normal.woff2") format("woff2"); }
-@font-face { font-family: "RA Sans"; font-style: normal; font-weight: 800; font-display: swap; src: url("fonts/open-sans-latin-800-normal.woff2") format("woff2"); }
-
+/* Tipografías del sistema (carpeta fonts/ no incluida en el paquete) */
 :root {
   --bg-deep: #020b18;
   --bg: #071525;
@@ -31,8 +24,8 @@
   --orange: #ff8c1a;
   --orange-hi: #ffb040;
   --red: #ff3b5c;
-  --font-title: "RA Exo", "Exo 2", system-ui, sans-serif;
-  --font: "RA Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-title: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, "Cascadia Code", "Roboto Mono", monospace;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);

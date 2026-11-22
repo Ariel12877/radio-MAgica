@@ -15,8 +15,7 @@
   <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="preload" href="radio-magica-pc-v2.png" as="image" type="image/png" />
-  <link rel="preload" href="fonts/roboto-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="fonts/roboto-condensed-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <!-- Fuentes del sistema (la carpeta fonts/ no está en el paquete) -->
   <script>
     // Ventana angosta (celular): se usa la versión móvil, que es index.html
     (function () {
@@ -27,10 +26,18 @@
     })();
   </script>
   <title>Radio Argentina</title>
-  <link rel="stylesheet" href="pc.css?v=43" />
+  <link rel="stylesheet" href="pc.css?v=45" />
 </head>
 <body>
   <div class="backdrop" aria-hidden="true"></div>
+
+  <!-- Búho pardo volador con carta (animación independiente, no afecta controles) -->
+  <div id="flyingOwl" class="flying-owl" aria-hidden="true">
+    <div class="owl-body">
+      <img src="magic-owl.webp" alt="" class="owl-img" width="90" height="70" />
+      <div class="owl-letter">✉</div>
+    </div>
+  </div>
 
   <!--
     Escenario de 1536 × 1024, igual que la imagen de referencia.
@@ -228,13 +235,37 @@
   </dialog>
 
   <audio id="player" preload="none"></audio>
-  <script src="stations.js?v=1"></script>
+  <script src="stations.js?v=2"></script>
   <script src="logos.js?v=1"></script>
-  <script src="pc.js?v=32"></script>
+  <script src="pc.js?v=33"></script>
   <script src="update.js?v=2"></script>
   <!-- Three.js va dentro del proyecto (vendor/) y pc-three.js es un script común:
        así los efectos funcionan abriendo el archivo con doble clic y sin Internet. -->
   <script src="vendor/three.min.js?v=149"></script>
-  <script src="pc-three.js?v=2"></script>
+  <script src="pc-three.js?v=4"></script>
+  <script>
+  /* Búho pardo con carta: vuela de derecha a izquierda cada cierto tiempo */
+  (function () {
+    var el = document.getElementById("flyingOwl");
+    if (!el || (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) return;
+    var busy = false;
+    function fly() {
+      if (busy || document.hidden) return;
+      busy = true;
+      el.classList.remove("is-flying");
+      void el.offsetWidth; // reinicia animación
+      el.classList.add("is-flying");
+      setTimeout(function () { el.classList.remove("is-flying"); busy = false; }, 16500);
+    }
+    // primera pasada a los ~3.5 s, luego cada 14–22 s
+    setTimeout(fly, 3500);
+    setInterval(function () {
+      if (!busy) fly();
+    }, 14000 + Math.random() * 8000);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { el.classList.remove("is-flying"); busy = false; }
+    });
+  })();
+  </script>
 </body>
 </html>

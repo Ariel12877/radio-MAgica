@@ -5,20 +5,7 @@
    pc.js escala el escenario completo para que entre en la ventana.
    ========================================================== */
 
-/* Tipografías (las mismas de la imagen de referencia) */
-@font-face { font-family: "Roboto"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url("fonts/roboto-latin-400-normal.woff2") format("woff2"); }
-@font-face { font-family: "Roboto"; font-style: normal; font-weight: 500; font-display: swap;
-  src: url("fonts/roboto-latin-500-normal.woff2") format("woff2"); }
-@font-face { font-family: "Roboto"; font-style: normal; font-weight: 700; font-display: swap;
-  src: url("fonts/roboto-latin-700-normal.woff2") format("woff2"); }
-@font-face { font-family: "Roboto Condensed"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url("fonts/roboto-condensed-latin-400-normal.woff2") format("woff2"); }
-@font-face { font-family: "Roboto Condensed"; font-style: normal; font-weight: 500; font-display: swap;
-  src: url("fonts/roboto-condensed-latin-500-normal.woff2") format("woff2"); }
-@font-face { font-family: "Roboto Condensed"; font-style: normal; font-weight: 700; font-display: swap;
-  src: url("fonts/roboto-condensed-latin-700-normal.woff2") format("woff2"); }
-
+/* Tipografías del sistema (carpeta fonts/ no incluida en el paquete) */
 :root {
   --ivory: #f3e6cf;
   --muted: #b8a07a;
@@ -26,8 +13,8 @@
   --brass: #c9a04a;
   --led: #6fdc8c;
   --red: #e5594d;
-  --sans: "Roboto", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
-  --cond: "Roboto Condensed", "Arial Narrow", "Roboto", "Segoe UI", system-ui, sans-serif;
+  --sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --cond: "Segoe UI", "Arial Narrow", system-ui, -apple-system, Arial, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,11 +24,8 @@ html, body { height: 100%; overflow: hidden; }
 body {
   position: relative;
   font-family: var(--sans);
-  /* Mesa de madera detrás: la radio no cambia de tamaño */
-  background:
-    radial-gradient(ellipse 85% 65% at 50% 40%, rgba(80, 52, 28, 0.5) 0%, transparent 70%),
-    linear-gradient(180deg, #2a1a10 0%, #4a3220 35%, #5c3e26 55%, #3d2818 80%, #24160e 100%);
-  background-color: #3d2818;
+  /* Mesa de madera expandida detrás — la radio mantiene su tamaño exacto */
+  background-color: #2a180e;
   color: var(--ivory);
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
@@ -51,27 +35,125 @@ button, input { font: inherit; color: inherit; }
 button { cursor: pointer; border: 0; background: none; -webkit-user-select: none; user-select: none; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-/* Fondo tipo mesa (vetas + ambiente), ya no usa la foto de la radio desenfocada */
+/* Fondo expandido tipo mesa mágica: textura de madera + profundidad + brillo ambiental */
 .backdrop {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 50% 22% at 50% 78%, rgba(0, 0, 0, 0.5) 0%, transparent 72%),
+    /* Viñeta suave para centrar la atención en la radio */
+    radial-gradient(ellipse 70% 55% at 50% 48%, transparent 35%, rgba(10, 5, 2, 0.55) 100%),
+    /* Sombra bajo la radio */
+    radial-gradient(ellipse 55% 18% at 50% 78%, rgba(0, 0, 0, 0.65) 0%, transparent 70%),
+    /* Brillo cálido superior */
+    radial-gradient(ellipse 80% 40% at 50% 18%, rgba(255, 190, 100, 0.12) 0%, transparent 65%),
+    /* Vetitas de madera finas */
     repeating-linear-gradient(
-      93deg,
-      rgba(0, 0, 0, 0.045) 0px,
-      rgba(0, 0, 0, 0.045) 1px,
+      92deg,
+      rgba(0, 0, 0, 0.06) 0px,
+      rgba(0, 0, 0, 0.06) 1px,
       transparent 1px,
-      transparent 11px,
-      rgba(255, 220, 160, 0.025) 11px,
-      rgba(255, 220, 160, 0.025) 12px,
-      transparent 12px,
-      transparent 22px
+      transparent 14px,
+      rgba(255, 220, 160, 0.035) 14px,
+      rgba(255, 220, 160, 0.035) 15px,
+      transparent 15px,
+      transparent 28px
     ),
-    linear-gradient(180deg, #2e1c12 0%, #4e3422 40%, #5a3c26 60%, #3a2618 100%);
+    /* Textura de madera (tile) expandida */
+    url("wood-texture.jpg") center center / 420px 420px repeat,
+    /* Base de madera profunda */
+    linear-gradient(180deg, #1e120a 0%, #3a2618 28%, #4e3422 52%, #3a2618 78%, #1a0e08 100%);
   filter: none;
+  opacity: 1;
+}
+
+/* ===== Búho pardo volador con carta (derecha → izquierda) ===== */
+.flying-owl {
+  position: fixed;
+  top: 7%;
+  right: -160px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.flying-owl.is-flying {
+  animation: owlFly 16s cubic-bezier(0.4, 0.05, 0.3, 1) forwards;
+}
+.owl-body {
+  position: relative;
+  width: 118px;
+  height: 95px;
+  filter:
+    drop-shadow(0 8px 14px rgba(0,0,0,.5))
+    drop-shadow(-12px 0 18px rgba(255, 200, 100, 0.25))
+    saturate(0.88) brightness(0.94);
+  animation: owlWing 0.55s ease-in-out infinite;
+}
+.owl-img {
+  display: block;
+  width: 108px;
+  height: auto;
+  transform: scaleX(-1); /* mira hacia la izquierda (vuela de der a izq) */
+}
+.owl-letter {
+  position: absolute;
+  left: 68px;
+  top: 48px;
+  width: 32px;
+  height: 24px;
+  background: linear-gradient(160deg, #f8ecd4 0%, #ead6b0 55%, #d8bc80 100%);
+  border: 1px solid #c9a86a;
+  border-radius: 2px 2px 3px 3px;
+  box-shadow:
+    0 2px 5px rgba(0,0,0,.4),
+    inset 0 1px 0 rgba(255,255,255,.35);
+  font-size: 15px;
+  line-height: 22px;
+  text-align: center;
+  color: #5a3a18;
+  transform: rotate(-8deg);
+  animation: letterBob 1.2s ease-in-out infinite;
+}
+/* polvo dorado que deja el búho al pasar */
+.owl-body::after {
+  content: "";
+  position: absolute;
+  right: -8px; top: 20%;
+  width: 40px; height: 50px;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(255,220,140,.55) 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 60%, rgba(255,200,100,.4) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 50% 80%, rgba(255,240,180,.35) 0 1px, transparent 2px);
+  opacity: 0.7;
+  animation: dustTrail 0.8s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes owlFly {
+  0%   { right: -160px; top: 9%;  opacity: 0; transform: translateY(0) scale(0.82); }
+  6%   { opacity: 1; }
+  20%  { top: 5%;  transform: translateY(-10px) scale(0.95); }
+  40%  { top: 11%; transform: translateY(8px)  scale(1.02); }
+  60%  { top: 6%;  transform: translateY(-6px) scale(0.98); }
+  80%  { top: 10%; transform: translateY(4px)  scale(1); }
+  94%  { opacity: 1; }
+  100% { right: calc(100% + 160px); top: 8%; opacity: 0; transform: translateY(0) scale(0.88); }
+}
+@keyframes letterBob {
+  0%, 100% { transform: rotate(-8deg) translateY(0); }
+  50%      { transform: rotate(-3deg) translateY(4px); }
+}
+@keyframes owlWing {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+@keyframes dustTrail {
+  0%   { opacity: 0.8; transform: translateX(0) scale(1); }
+  100% { opacity: 0;   transform: translateX(18px) scale(1.4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flying-owl { display: none !important; }
 }
 
 /* ===== Escenario (coordenadas de la imagen) ===== */

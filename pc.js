@@ -981,27 +981,33 @@ function fit() {
 window.addEventListener("resize", fit);
 
 /* ============================================================
-   Inicio
+   Inicio — primero se muestra la radio, luego se arma la lista
+   (así no se siente “lenta” la carga de emisoras)
    ============================================================ */
-buildRows();
 (function restoreVolume() {
   const v = parseFloat(safeGet("radio-vol", "0.92"));
   volume = isNaN(v) ? 1 : Math.min(1, Math.max(0, v));
   player.volume = volume;
   paintVolume();
 })();
-(function restoreStation() {
-  const last = safeGet("radio-last", "");
-  currentStation = STATIONS.find((s) => s.id === last) || STATIONS[0] || null;
-  highlightRow();
-})();
 fit();
 applyLang();
 setStatus("ready");
 setPlayIcon(false);
 stage.classList.add("ready");
-if (currentStation) scrollToStation(currentStation, true);
-updateScrollbar();
+
+// Construir filas en el siguiente frame para que el paint de la radio sea inmediato
+requestAnimationFrame(function () {
+  buildRows();
+  (function restoreStation() {
+    const last = safeGet("radio-last", "");
+    currentStation = STATIONS.find((s) => s.id === last) || STATIONS[0] || null;
+    highlightRow();
+  })();
+  if (currentStation) scrollToStation(currentStation, true);
+  updateScrollbar();
+  fitName();
+});
 if (document.fonts && document.fonts.ready) {
   document.fonts.ready.then(() => { fitName(); updateScrollbar(); });
 }

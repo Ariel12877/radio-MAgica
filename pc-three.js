@@ -62,12 +62,14 @@
     var soft = softTexture(), ringTex = ringTexture();
 
     // Zonas (en coordenadas de la imagen): dónde aparecen las partículas y los halos
+    // Más partículas y un poco más de radio para sensación mágica más densa
     var ZONES = [
-      { name: "buho",     x: 430,  y: 150, r: 125, n: 70, color: 0xffe3a0, glow: 0xffd98a, pulse: true  },
-      { name: "estela",   x: 395,  y: 345, r: 125, n: 55, color: 0xffc96a, glow: 0xffb84a, pulse: false },
-      { name: "sombrero", x: 1165, y: 545, r: 140, n: 60, color: 0xffd27a, glow: 0xffc25a, pulse: true  },
-      { name: "varita",   x: 770,  y: 975, r: 150, n: 55, color: 0xffc96a, glow: 0xffa83a, pulse: true  },
-      { name: "pocion",   x: 1115, y: 820, r: 100, n: 45, color: 0x8fbfff, glow: 0x5f9bff, pulse: false }
+      { name: "buho",     x: 430,  y: 150, r: 135, n: 90, color: 0xffe3a0, glow: 0xffd98a, pulse: true  },
+      { name: "estela",   x: 395,  y: 345, r: 130, n: 65, color: 0xffc96a, glow: 0xffb84a, pulse: false },
+      { name: "sombrero", x: 1165, y: 545, r: 150, n: 80, color: 0xffd27a, glow: 0xffc25a, pulse: true  },
+      { name: "varita",   x: 770,  y: 975, r: 160, n: 70, color: 0xffc96a, glow: 0xffa83a, pulse: true  },
+      { name: "pocion",   x: 1115, y: 820, r: 110, n: 55, color: 0x8fbfff, glow: 0x5f9bff, pulse: false },
+      { name: "cielo",    x: 768,  y: 80,  r: 420, n: 40, color: 0xfff0c0, glow: 0xffe8a0, pulse: false }
     ];
 
     // ----- Partículas -----
@@ -98,7 +100,7 @@
     geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
     geo.setAttribute("color", new THREE.BufferAttribute(col, 4));
     var mat = new THREE.PointsMaterial({
-      map: soft, size: 15 * pr, sizeAttenuation: false, vertexColors: true,
+      map: soft, size: 17 * pr, sizeAttenuation: false, vertexColors: true,
       transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
     });
     scene.add(new THREE.Points(geo, mat));
@@ -127,6 +129,87 @@
         pulses.push({ mesh: m, period: 5.5, offset: j * 2.75 + zi * 0.9 });
       }
     });
+
+    // ----- Escudos de las casas que el sombrero lanza hacia arriba -----
+    // Formas de escudo dorado/rojo/azul/verde (estilo casas mágicas)
+    function shieldTexture(fill, stroke) {
+      var c = document.createElement("canvas"); c.width = c.height = 64;
+      var g = c.getContext("2d");
+      g.beginPath();
+      g.moveTo(32, 4); g.lineTo(56, 14); g.lineTo(56, 36);
+      g.quadraticCurveTo(56, 52, 32, 60); g.quadraticCurveTo(8, 52, 8, 36);
+      g.lineTo(8, 14); g.closePath();
+      g.fillStyle = fill; g.fill();
+      g.strokeStyle = stroke; g.lineWidth = 3; g.stroke();
+      // insignia simple
+      g.beginPath(); g.arc(32, 30, 10, 0, Math.PI * 2);
+      g.fillStyle = "rgba(255,255,255,.35)"; g.fill();
+      return new THREE.CanvasTexture(c);
+    }
+    var SHIELD_TEX = [
+      shieldTexture("#c9a227", "#f0d060"), // dorado
+      shieldTexture("#7a1f1f", "#e05050"), // rojo
+      shieldTexture("#1a3a6e", "#5a9ae8"), // azul
+      shieldTexture("#1f5a2a", "#50c060")  // verde
+    ];
+    var HAT = { x: 1165, y: 545 };
+    var shields = [];
+    var nextShield = 1.2 + Math.random() * 1.5;
+    function spawnShield(t) {
+      var tex = SHIELD_TEX[Math.floor(Math.random() * SHIELD_TEX.length)];
+      var size = 32 + Math.random() * 18; // un poco más grandes y variados
+      var m = new THREE.Mesh(
+        new THREE.PlaneGeometry(size, size * 1.2),
+        new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.98, depthWrite: false, side: THREE.DoubleSide })
+      );
+      var ang = -0.7 + Math.random() * 1.4; // abanico más amplio hacia arriba
+      var spd = 70 + Math.random() * 90;
+      m.position.set(HAT.x + (Math.random() - 0.5) * 40, Y(HAT.y - 12), 1);
+      m.rotation.z = (Math.random() - 0.5) * 0.8;
+      scene.add(m);
+      shields.push({
+        mesh: m,
+        vx: Math.sin(ang) * spd * 0.6,
+        vy: -Math.cos(ang) * spd,   // negativo = sube en coords de imagen
+        rot: (Math.random() - 0.5) * 2.8,
+        born: t,
+        life: 3.0 + Math.random() * 1.6
+      });
+    }
+
+    // ----- Estrellas fugaces en el cielo de la radio -----
+    var shooting = [];
+    var nextShoot = 3 + Math.random() * 4;
+    function spawnShootingStar(t) {
+      var startX = 80 + Math.random() * 900;
+      var startY = 30 + Math.random() * 120;
+      var len = 90 + Math.random() * 110;
+      var ang = 0.35 + Math.random() * 0.35; // diagonal hacia abajo-derecha
+      var geoS = new THREE.BufferGeometry();
+      var posS = new Float32Array([0, 0, 0, -len, 0, 0]);
+      geoS.setAttribute("position", new THREE.BufferAttribute(posS, 3));
+      var matS = new THREE.LineBasicMaterial({
+        color: 0xfff2c8, transparent: true, opacity: 0.9,
+        blending: THREE.AdditiveBlending, depthWrite: false
+      });
+      var line = new THREE.Line(geoS, matS);
+      line.position.set(startX, Y(startY), 2);
+      line.rotation.z = -ang;
+      scene.add(line);
+      // punto brillante en la cabeza
+      var head = new THREE.Mesh(
+        new THREE.PlaneGeometry(14, 14),
+        new THREE.MeshBasicMaterial({ map: soft, color: 0xfff8e0, transparent: true, opacity: 1,
+          blending: THREE.AdditiveBlending, depthWrite: false })
+      );
+      head.position.set(startX, Y(startY), 3);
+      scene.add(head);
+      shooting.push({
+        line: line, head: head, born: t, life: 0.55 + Math.random() * 0.35,
+        vx: Math.cos(ang) * (380 + Math.random() * 180),
+        vy: Math.sin(ang) * (380 + Math.random() * 180)
+      });
+    }
 
     function frame(t) {
       var i, p, age, f, tw, px, py, k3, k4;
@@ -158,6 +241,64 @@
         q.mesh.scale.setScalar(0.35 + 0.95 * u);
         q.mesh.material.opacity = 0.30 * Math.pow(1 - u, 1.6) * Math.min(1, u * 8);
       }
+
+      // Escudos lanzados por el sombrero (más frecuentes y a veces en ráfaga)
+      if (t > nextShield) {
+        spawnShield(t);
+        if (Math.random() < 0.55) spawnShield(t);
+        if (Math.random() < 0.25) spawnShield(t); // ráfaga triple ocasional
+        nextShield = t + 1.6 + Math.random() * 2.8;
+      }
+      var dt = 0.016;
+      for (i = shields.length - 1; i >= 0; i--) {
+        var sh = shields[i];
+        var ageS = t - sh.born;
+        if (ageS > sh.life) {
+          scene.remove(sh.mesh);
+          sh.mesh.geometry.dispose();
+          sh.mesh.material.dispose();
+          shields.splice(i, 1);
+          continue;
+        }
+        sh.mesh.position.x += sh.vx * dt;
+        // Y de Three es invertido respecto a la imagen
+        sh.mesh.position.y -= sh.vy * dt; // vy negativo en imagen → sube
+        sh.vy += 32 * dt; // gravedad suave
+        sh.mesh.rotation.z += sh.rot * dt;
+        var fade = ageS < 0.18 ? ageS / 0.18 : (1 - (ageS - 0.18) / (sh.life - 0.18));
+        sh.mesh.material.opacity = Math.max(0, fade * 0.98);
+        var sc = 0.65 + 0.5 * Math.min(1, ageS / 0.3);
+        sh.mesh.scale.set(sc, sc, 1);
+      }
+
+      // Estrellas fugaces
+      if (t > nextShoot) {
+        spawnShootingStar(t);
+        if (Math.random() < 0.3) spawnShootingStar(t);
+        nextShoot = t + 4.5 + Math.random() * 7;
+      }
+      for (i = shooting.length - 1; i >= 0; i--) {
+        var ss = shooting[i];
+        var ageSt = t - ss.born;
+        if (ageSt > ss.life) {
+          scene.remove(ss.line); scene.remove(ss.head);
+          ss.line.geometry.dispose(); ss.line.material.dispose();
+          ss.head.geometry.dispose(); ss.head.material.dispose();
+          shooting.splice(i, 1);
+          continue;
+        }
+        var k = ageSt / ss.life;
+        ss.line.position.x += ss.vx * dt;
+        ss.line.position.y -= ss.vy * dt;
+        ss.head.position.x = ss.line.position.x;
+        ss.head.position.y = ss.line.position.y;
+        var op = k < 0.15 ? k / 0.15 : (1 - (k - 0.15) / 0.85);
+        ss.line.material.opacity = Math.max(0, op * 0.85);
+        ss.head.material.opacity = Math.max(0, op);
+        var hs = 0.6 + 0.8 * (1 - k);
+        ss.head.scale.set(hs, hs, 1);
+      }
+
       renderer.render(scene, camera);
     }
 

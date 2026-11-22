@@ -4,11 +4,11 @@
    Cómo funciona: cada radio (por su id de stations.js) tiene hasta
    tres lugares donde buscar su logo, y se prueban en este orden:
      w  logos/<w>.webp                       (el más liviano)
-     r  radio_logos/<r>_list_100 / play_300 / play_512
+     r  logos/<r>_list_100 / play_300 / play_512
      f  un archivo puntual (las radios de Chaco)
    Si ninguno carga, se muestran las iniciales de la radio.
 
-   Para sumar un logo: copiá la imagen a radio_logos/ y agregá UNA
+   Para sumar un logo: copiá la imagen a logos/ y agregá UNA
    línea acá abajo, con el id exacto de la radio en stations.js.
    ============================================================ */
 (function (global) {
@@ -17,24 +17,24 @@
   var SIZES = ["list_100", "play_300", "play_512"];
 
   var MAP = {
-  "radiotop": { f: "radio_logos/local/radio-top.jpg" },
-  "Pobre Johnny": { f: "radio_logos/local/pobre-johnny.jpg" },
-  "El mañanero": { f: "radio_logos/local/el-mananero.jpg" },
-  "FM libertad Machagai": { f: "radio_logos/local/fm-libertad-machagai.jpg" },
-  "VIP FM": { f: "radio_logos/local/vip-fm-machagai.jpg" },
-  "Master FM": { f: "radio_logos/local/master-fm-machagai.jpg" },
-  "Cristalfm": { f: "radio_logos/local/fm-cristal-machagai.jpg" },
-  "laradio1047": { f: "radio_logos/local/la-radio-1047.jpg" },
+  "radiotop": { f: "local/radio-top.jpg" },
+  "Pobre Johnny": { f: "local/pobre-johnny.jpg" },
+  "El mañanero": { f: "local/el-mananero.jpg" },
+  "FM libertad Machagai": { f: "local/fm-libertad-machagai.jpg" },
+  "VIP FM": { f: "local/vip-fm-machagai.jpg" },
+  "Master FM": { f: "local/master-fm-machagai.jpg" },
+  "Cristalfm": { f: "local/fm-cristal-machagai.jpg" },
+  "laradio1047": { f: "local/la-radio-1047.jpg" },
   "facundoquiroga": { w: "facundoquiroga" },
-  "radiofan": { f: "radio_logos/local/radio-fan.jpg" },
-  "WALTER FM": { f: "radio_logos/local/walter-fm.jpg" },
-  "Retro FM": { f: "radio_logos/local/retro-fm.jpg" },
-  "Radio Mocovl AM 800": { f: "radio_logos/local/radio-mocovi.jpg" },
+  "radiofan": { f: "local/radio-fan.jpg" },
+  "WALTER FM": { f: "local/walter-fm.jpg" },
+  "Retro FM": { f: "local/retro-fm.jpg" },
+  "Radio Mocovl AM 800": { f: "local/radio-mocovi.jpg" },
   "radiomaria": { r: "radio-maria-argentina" },
-  "Futuro": { f: "radio_logos/local/radio-futuro.jpg" },
+  "Futuro": { f: "local/radio-futuro.jpg" },
   "Radio Con Vos": { w: "convos", r: "radio-con-vos" },
   "lra26": { r: "radio-nacional" },
-  "fmgualamba": { f: "radio_logos/local/fm-gualamba.jpg" },
+  "fmgualamba": { f: "local/fm-gualamba.jpg" },
   "nacional": { w: "nacional", r: "radio-nacional" },
   "FM Milenium ": { r: "milenium-106-7-fm" },
   "Vale 97.5": { w: "vale", r: "radio-vale" },
@@ -128,7 +128,7 @@
     if (e.w) out.push("logos/" + e.w + ".webp");
     if (e.r) {
       var ext = e.e || "jpg";
-      SIZES.forEach(function (s) { out.push("radio_logos/" + e.r + "_" + s + "." + ext); });
+      SIZES.forEach(function (s) { out.push("logos/" + e.r + "_" + s + "." + ext); });
     }
     if (e.f) out.push(e.f);
     return out;
